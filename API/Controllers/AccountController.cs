@@ -21,6 +21,7 @@ namespace API.Controllers
         private async Task<bool> UserExists(string username){
             return await _context.Users.AnyAsync(user => user.UserName == username.ToLower());
         }
+
         [HttpPost("register")]
         public async Task<ActionResult<AppUser>> Register(UserRegisterDto userRegisterDto){
             if(await UserExists(userRegisterDto.Username))
@@ -33,6 +34,23 @@ namespace API.Controllers
             };
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
+            return user;
+        }
+
+        [HttpPost("login")]
+        public async Task<ActionResult<AppUser>> Login(UserLoginDto userLoginDto){
+            var user = await _context.Users.SingleOrDefaultAsync(x => x.UserName == userLoginDto.Username);
+            
+            if(user == null)
+                return Unauthorized("Invalid username");
+
+            using var hmac = new HMACSHA512(user.PasswordSalt);
+            var loginPwdHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(userLoginDto.Password));
+
+            for(int i =0;i<loginPwdHash.Length;i++){
+                if(loginPwdHash[i] != user.PasswordHash[i])
+                    return Unauthorized("Incorrect Password");
+            }
             return user;
         }
     }
