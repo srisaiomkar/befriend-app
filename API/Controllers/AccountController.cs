@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using API.Data;
 using API.DTOs;
 using API.Entities;
+using API.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,10 +13,12 @@ namespace API.Controllers
     public class AccountController : BaseApiController
     {
         private readonly DataContext _context;
+        private readonly ITokenService _tokenService;
 
-        public AccountController(DataContext context)
+        public AccountController(DataContext context,ITokenService tokenService)
         {
             _context = context;
+            _tokenService = tokenService;
         }
         
         private async Task<bool> UserExists(string username){
@@ -23,7 +26,7 @@ namespace API.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<ActionResult<AppUser>> Register(UserRegisterDto userRegisterDto){
+        public async Task<ActionResult<UserDto>> Register(UserRegisterDto userRegisterDto){
             if(await UserExists(userRegisterDto.Username))
                 return BadRequest("Username already exists");
             using var hmac = new HMACSHA512();
@@ -34,11 +37,14 @@ namespace API.Controllers
             };
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
-            return user;
+            return new UserDto{
+                Username = user.UserName,
+                Token = _tokenService.CreateToken(user)
+            };
         }
 
         [HttpPost("login")]
-        public async Task<ActionResult<AppUser>> Login(UserLoginDto userLoginDto){
+        public async Task<ActionResult<UserDto>> Login(UserLoginDto userLoginDto){
             var user = await _context.Users.SingleOrDefaultAsync(x => x.UserName == userLoginDto.Username);
             
             if(user == null)
@@ -51,7 +57,10 @@ namespace API.Controllers
                 if(loginPwdHash[i] != user.PasswordHash[i])
                     return Unauthorized("Incorrect Password");
             }
-            return user;
+            return new UserDto{
+                Username = user.UserName,
+                Token = _tokenService.CreateToken(user)
+            };
         }
     }
 }
