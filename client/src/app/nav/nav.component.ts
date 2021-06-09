@@ -7,12 +7,10 @@ import { AccountService } from '../_services/account.service';
   styleUrls: ['./nav.component.css']
 })
 export class NavComponent implements OnInit {
-  loggedIn : boolean = false;
   model : any = {};
-  constructor(private accountService : AccountService) { }
+  constructor(public accountService : AccountService) { }
 
   ngOnInit(){
-    this.getCurrentUser();
   }
 
   login(){
@@ -25,14 +23,5 @@ export class NavComponent implements OnInit {
 
   logout(){
     this.accountService.logout();
-    this.loggedIn = false;
-  }
-
-  getCurrentUser(){
-    this.accountService.currentUser$.subscribe(user =>{
-      this.loggedIn = !!user;
-    },error =>{
-      console.log(error);
-    })
   }
 }
