@@ -8,5 +8,5 @@
         </p>
 </div>
 <div *ngIf="registerMode" class="container">
-    <app-user-register></app-user-register>
+    <app-user-register (cancelRegisterEE) ="cancelRegister($event)"></app-user-register>
 </div>
