@@ -16,6 +16,7 @@ import { ListsComponent } from './lists/lists.component';
 import { MessagesComponent } from './messages/messages.component';
 import { ToastrModule } from 'ngx-toastr';
 import { ThirdPartyModule } from './_modules/third-party.module';
+import { ErrorTestComponent } from './errors/error-test/error-test.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { ThirdPartyModule } from './_modules/third-party.module';
     MemberListComponent,
     MemberDetailComponent,
     ListsComponent,
-    MessagesComponent
+    MessagesComponent,
+    ErrorTestComponent
   ],
   imports: [
     BrowserModule,
