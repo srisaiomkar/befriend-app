@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
@@ -17,6 +17,9 @@ import { MessagesComponent } from './messages/messages.component';
 import { ToastrModule } from 'ngx-toastr';
 import { ThirdPartyModule } from './_modules/third-party.module';
 import { ErrorTestComponent } from './errors/error-test/error-test.component';
+import { ErrorInterceptor } from './_interceptors/error.interceptor';
+import { NotFoundComponent } from './errors/not-found/not-found.component';
+import { ServerErrorComponent } from './errors/server-error/server-error.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +31,9 @@ import { ErrorTestComponent } from './errors/error-test/error-test.component';
     MemberDetailComponent,
     ListsComponent,
     MessagesComponent,
-    ErrorTestComponent
+    ErrorTestComponent,
+    NotFoundComponent,
+    ServerErrorComponent
   ],
   imports: [
     BrowserModule,
@@ -38,7 +43,9 @@ import { ErrorTestComponent } from './errors/error-test/error-test.component';
     BrowserAnimationsModule,
     ThirdPartyModule
   ],
-  providers: [],
+  providers: [
+    {provide:HTTP_INTERCEPTORS, useClass : ErrorInterceptor, multi:true}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

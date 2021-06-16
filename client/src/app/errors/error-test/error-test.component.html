@@ -1,7 +1,14 @@
-<ng-container>
-    <button (click)='test400Error()' type="button" class="btn btn-outline-primary">Test 400</button>
-    <button (click)='test401Error()' type="button" class="btn btn-outline-primary">Test 401</button>
-    <button (click)='test404Error()' type="button" class="btn btn-outline-primary">Test 404</button>
-    <button (click)='test500Error()' type="button" class="btn btn-outline-primary">Test 500</button>
-    <button (click)='test400ValidationError()' type="button" class="btn btn-outline-primary">Test 400 Validation Error</button>
-</ng-container>
+<div class="mt-3">
+    <ng-container>
+        <button (click)='test400Error()' type="button" class="btn btn-outline-danger mr-3">Test 400</button>
+        <button (click)='test401Error()' type="button" class="btn btn-outline-danger mr-3">Test 401</button>
+        <button (click)='test404Error()' type="button" class="btn btn-outline-danger mr-3">Test 404</button>
+        <button (click)='test500Error()' type="button" class="btn btn-outline-danger mr-3">Test 500</button>
+        <button (click)='test400ValidationError()' type="button" class="btn btn-outline-danger">Test 400 Validation Error</button>
+        <div class = "mt-3" *ngIf="validationErrors.length > 0">
+            <ul class="text-danger">
+                <li *ngFor="let error of validationErrors"> {{error}}</li>
+            </ul>
+        </div>
+    </ng-container>
+</div>

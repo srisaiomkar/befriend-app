@@ -1,0 +1,5 @@
+<div class="container">
+    <h1 class="text-danger">404 - Page Not Found</h1>
+    <button class="btn btn-outline-primary" *ngIf="accountService.currentUser$ | async" type="button" routerLink='/members' routerLinkActive='/members'>Back to Home</button>
+    <button class="btn btn-outline-primary" *ngIf="(accountService.currentUser$ | async) == null" type="button" routerLink='/' routerLinkActive='/'>Back to Home</button>
+</div>

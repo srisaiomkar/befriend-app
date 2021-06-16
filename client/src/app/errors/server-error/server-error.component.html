@@ -1,0 +1,7 @@
+<div class="container">
+    <h1 class="text-danger">500 - Server error</h1>
+    <ng-container *ngIf="error">
+        <h3 class="text-info">{{error.message}}</h3>
+        <code>{{error.details}}</code>
+    </ng-container>
+</div>
