@@ -22,12 +22,16 @@ namespace API.Data.Repositories
 
         public async Task<AppUser> GetUserByNameAsync(string username)
         {
-            return await _context.Users.SingleOrDefaultAsync(user => user.UserName == username);
+            return await _context.Users
+            .Include(user => user.Photos)
+            .SingleOrDefaultAsync(user => user.UserName == username);
         }
 
         public async Task<IEnumerable<AppUser>> GetUsersAsync()
         {
-            return await _context.Users.ToListAsync();
+            return await _context.Users
+            .Include(user => user.Photos)
+            .ToListAsync();
         }
 
         public async Task<bool> SaveAllChangesAsync()
