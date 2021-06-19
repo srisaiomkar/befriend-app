@@ -16,8 +16,6 @@
     opacity: 0;
     margin-bottom: 0.3rem;
 }
-.card-img-wrapper i{
-}
 .card:hover .member-icons{
     opacity: 1;
 }
