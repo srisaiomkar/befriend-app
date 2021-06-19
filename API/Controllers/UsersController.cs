@@ -27,8 +27,7 @@ namespace API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<MemberDto>>> GetUsers()
         {
-            var users = await _userRepository.GetUsersAsync();
-            var usersToReturn = _mapper.Map<IEnumerable<MemberDto>>(users);
+            var usersToReturn = await _userRepository.GetMembersAsync();
             return Ok(usersToReturn);
         }
 
@@ -36,8 +35,7 @@ namespace API.Controllers
         [Route("{username}")]
         public async Task<ActionResult<MemberDto>> GetUser(string username)
         {
-            var user = await _userRepository.GetUserByNameAsync(username);
-            return _mapper.Map<MemberDto>(user);
+            return await _userRepository.GetMembersByNameAsync(username);
         }
     }
 }
