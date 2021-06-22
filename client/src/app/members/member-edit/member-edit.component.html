@@ -6,7 +6,7 @@
                 <h4 class="text-center">
                     {{member.nickName}}
                 </h4>
-                <div *ngIf="member.city && member.country" >
+                <div>
                     <strong>Location: </strong>
                     {{member.city}}, {{member.country}}
                 </div>
@@ -27,43 +27,44 @@
                     {{member.lastActive}}
                 </div>
                 <div class="text-center mt-3" >
-                    <ng-container *ngIf="member.userName != (accountService.currentUser$ | async).username">
-                        <button class="btn btn-danger mr-4">
-                            <i class="fa fa-heart" aria-hidden="true"></i>
-                          </button>
-                          <button class="btn btn-info">
-                            <i class="fa fa-envelope" aria-hidden="true"></i>
-                          </button>
-                    </ng-container>
-                    <ng-container *ngIf="member.userName == (accountService.currentUser$ | async).username">
-                          <button class="btn btn-primary" routerLink='/member/edit'>
-                            Edit Profile
-                          </button>
-                    </ng-container>
+                    <button class="btn btn-success mr-2" routerLink='/member/edit'>
+                        Confirm Changes 
+                    </button>
+                    <button class="btn btn-danger" routerLink='/members/{{user.username}}'>
+                        Discard Changes 
+                    </button>
                 </div>
             </div>
         </div>
     </div>
     <div class="col-8">
+        <div class="alert alert-info">You have made changes. Click on the Confirm Changes button to save your changes.</div>
         <tabset>
             <tab heading="About {{member.nickName}}" id="tab1">
-                <div class="section" *ngIf ="member.bio">
+                <div class="section form-inline">
+                    <label for="nickName"><strong>NickName:</strong></label>
+                    <input type ="text" class="form-control mx-2" rows="6" name = "nickName" [(ngModel)]="member.nickName">
+                    <label for="city"><strong>City:</strong></label>
+                    <input type ="text" class="form-control mx-2" rows="6" name = "city" [(ngModel)]="member.city">
+                    <label for="country"><strong>Country:</strong></label>
+                    <input type ="text" class="form-control mx-2" rows="6" name = "country" [(ngModel)]="member.country">
+                </div>
+                <div class="section">
                     <strong>Bio:</strong>
-                    <div>{{member.bio}}</div>
+                    <textarea class="form-control" rows="6" [(ngModel)]="member.bio"></textarea>
                 </div>
-                <div class="section" *ngIf ="member.interests">
+                <div class="section">
                     <strong>Interests:</strong>
-                    <div>{{member.interests}}</div>
+                    <textarea class="form-control" rows="6" [(ngModel)]="member.interests"></textarea>
                 </div>
-                <div class="section" *ngIf ="member.lookingFor">
+                <div class="section">
                     <strong>Looking for:</strong>
-                    <div>{{member.lookingFor}}</div>
+                    <textarea class="form-control" rows="6" [(ngModel)]="member.lookingFor"></textarea>
+
                 </div>
             </tab>
             <tab heading="Photos">
-                <ngx-gallery [options]='galleryOptions' [images]='galleryImages'class="ngx-gallery"></ngx-gallery>
             </tab>
-            <tab heading="Messages" *ngIf="member.userName != (accountService.currentUser$ | async).username">Messages</tab>
           </tabset>
     </div>
 </div>
