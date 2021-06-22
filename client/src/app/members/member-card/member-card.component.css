@@ -5,6 +5,7 @@
 
 .card-img-wrapper{
     position: relative;
+    cursor: pointer;
 }
 .member-icons{
     position: absolute;

@@ -1,1 +1,60 @@
-<p>member-detail works!</p>
+<div class="row mt-4" *ngIf="member">
+    <div class="col-4">
+        <div class="card">
+            <img class="card-img-top img-thumbnail" src="{{member.mainPhotoUrl}}" alt="{{member.nickName}}">
+            <div class="card-body">
+                <h4 class="text-center">
+                    {{member.nickName}}
+                </h4>
+                <div>
+                    <strong>Location: </strong>
+                    {{member.city}}, {{member.country}}
+                </div>
+                <div>
+                    <strong>Age: </strong>
+                    {{member.age}}
+                </div>
+                <div>
+                    <strong>Gender: </strong>
+                    {{member.gender | titlecase}}
+                </div>
+                <div>
+                    <strong>Member since: </strong>
+                    {{member.accountCreated}}
+                </div>
+                <div>
+                    <strong>Last Active: </strong>
+                    {{member.lastActive}}
+                </div>
+                <div class="text-center mt-3">
+                    <button class="btn btn-danger mr-4">
+                        <i class="fa fa-heart" aria-hidden="true"></i>
+                      </button>
+                      <button class="btn btn-info">
+                        <i class="fa fa-envelope" aria-hidden="true"></i>
+                      </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-8">
+        <tabset>
+            <tab heading="About {{member.nickName}}" id="tab1">
+                <div class="section">
+                    <strong>Bio</strong>
+                    <div>{{member.bio}}</div>
+                </div>
+                <div class="section">
+                    <strong>Interests</strong>
+                    <div>{{member.interests}}</div>
+                </div>
+                <div class="section">
+                    <strong>Looking for</strong>
+                    <div>{{member.lookingFor}}</div>
+                </div>
+            </tab>
+            <tab heading="Photos">Photos</tab>
+            <tab heading="Messages">Messages</tab>
+          </tabset>
+    </div>
+</div>
