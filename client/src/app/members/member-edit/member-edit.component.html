@@ -27,41 +27,43 @@
                     {{member.lastActive}}
                 </div>
                 <div class="text-center mt-3" >
-                    <button class="btn btn-success mr-2" routerLink='/member/edit'>
+                    <button form="editForm" type="submit"  class="btn btn-success mr-2" [disabled]='!editForm.dirty'>
                         Confirm Changes 
                     </button>
                     <button class="btn btn-danger" routerLink='/members/{{user.username}}'>
-                        Discard Changes 
+                        Back to My Profile 
                     </button>
                 </div>
+            <div class="alert alert-info mt-3" *ngIf="editForm.dirty">You have made changes. Click on the Confirm Changes button to save your changes.</div>
             </div>
         </div>
     </div>
     <div class="col-8">
-        <div class="alert alert-info">You have made changes. Click on the Confirm Changes button to save your changes.</div>
         <tabset>
             <tab heading="About {{member.nickName}}" id="tab1">
-                <div class="section form-inline">
-                    <label for="nickName"><strong>NickName:</strong></label>
-                    <input type ="text" class="form-control mx-2" rows="6" name = "nickName" [(ngModel)]="member.nickName">
-                    <label for="city"><strong>City:</strong></label>
-                    <input type ="text" class="form-control mx-2" rows="6" name = "city" [(ngModel)]="member.city">
-                    <label for="country"><strong>Country:</strong></label>
-                    <input type ="text" class="form-control mx-2" rows="6" name = "country" [(ngModel)]="member.country">
-                </div>
-                <div class="section">
-                    <strong>Bio:</strong>
-                    <textarea class="form-control" rows="6" [(ngModel)]="member.bio"></textarea>
-                </div>
-                <div class="section">
-                    <strong>Interests:</strong>
-                    <textarea class="form-control" rows="6" [(ngModel)]="member.interests"></textarea>
-                </div>
-                <div class="section">
-                    <strong>Looking for:</strong>
-                    <textarea class="form-control" rows="6" [(ngModel)]="member.lookingFor"></textarea>
-
-                </div>
+                <form #editForm ="ngForm" id ="editForm" (ngSubmit)="editMember()">
+                    <div class="section form-inline">
+                        <label for="nickName"><strong>NickName:</strong></label>
+                        <input type ="text" class="form-control mx-2" rows="6" name = "nickName" [(ngModel)]="member.nickName">
+                        <label for="city"><strong>City:</strong></label>
+                        <input type ="text" class="form-control mx-2" rows="6" name = "city" [(ngModel)]="member.city">
+                        <label for="country"><strong>Country:</strong></label>
+                        <input type ="text" class="form-control mx-2" rows="6" name = "country" [(ngModel)]="member.country">
+                    </div>
+                    <div class="section">
+                        <strong>Bio:</strong>
+                        <textarea name = "bio" class="form-control" rows="6" [(ngModel)]="member.bio"></textarea>
+                    </div>
+                    <div class="section">
+                        <strong>Interests:</strong>
+                        <textarea name = "interests" class="form-control" rows="6" [(ngModel)]="member.interests"></textarea>
+                    </div>
+                    <div class="section">
+                        <strong>Looking for:</strong>
+                        <textarea name = "lookingFor" class="form-control" rows="6" [(ngModel)]="member.lookingFor"></textarea>
+    
+                    </div>
+                </form>
             </tab>
             <tab heading="Photos">
             </tab>
