@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgxGalleryAnimation, NgxGalleryImage, NgxGalleryOptions } from '@kolkov/ngx-gallery';
 import { Member } from 'src/app/_models/member';
 import { User } from 'src/app/_models/user';
@@ -16,9 +16,12 @@ export class MemberDetailComponent implements OnInit {
   galleryOptions : NgxGalleryOptions[];
   galleryImages: NgxGalleryImage[];
   constructor(private memberService : MemberService, private route : ActivatedRoute,
-    public accountService : AccountService) { }
+    public accountService : AccountService,private router : Router) { 
+      this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    }
 
   ngOnInit(): void {
+
     this.loadMember();
     this.galleryOptions = [
       {
