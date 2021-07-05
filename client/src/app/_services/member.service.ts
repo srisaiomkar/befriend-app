@@ -20,7 +20,6 @@ export class MemberService {
     return this.http.get<Member[]>(this.baseUrl + 'users').pipe(
       map(members => {
         this.members = members;
-        console.log(this.members);
         return members;
       })
     );
