@@ -24,9 +24,8 @@ namespace API.Services
 
         public async Task<DeletionResult> DeletePhotoAsync(string publicId)
         {
-            var result = new DeletionResult();
             var deletionParams = new DeletionParams(publicId);
-            await _cloudinary.DestroyAsync(deletionParams);
+            var result = await _cloudinary.DestroyAsync(deletionParams);
             return result;
         }
 
