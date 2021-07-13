@@ -11,6 +11,7 @@ import { AccountService } from '../_services/account.service';
 export class UserRegisterComponent implements OnInit {
   model : any = {};
   registerForm : FormGroup;
+  maxDate : Date;
   @Output() cancelRegisterEE = new EventEmitter(); 
   constructor(private accountService : AccountService,
               private toastrService : ToastrService,
@@ -18,6 +19,8 @@ export class UserRegisterComponent implements OnInit {
 
   ngOnInit(): void {
     this.initializeForm();
+    this.maxDate = new Date();
+    this.maxDate.setFullYear(this.maxDate.getFullYear() - 18);
   }
 
   initializeForm(){
