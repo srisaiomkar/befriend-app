@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { AccountService } from '../_services/account.service';
 
@@ -13,17 +13,18 @@ export class UserRegisterComponent implements OnInit {
   registerForm : FormGroup;
   @Output() cancelRegisterEE = new EventEmitter(); 
   constructor(private accountService : AccountService,
-              private toastrService : ToastrService) { }
+              private toastrService : ToastrService,
+              private fb : FormBuilder) { }
 
   ngOnInit(): void {
     this.initializeForm();
   }
 
   initializeForm(){
-    this.registerForm = new FormGroup({
-      username : new FormControl('',Validators.required),
-      password : new FormControl('',Validators.required),
-      confirmPassword : new FormControl('',[Validators.required,this.matchWith('password')])
+    this.registerForm = this.fb.group({
+      username : ['',Validators.required],
+      password : ['',Validators.required],
+      confirmPassword : ['',[Validators.required,this.matchWith('password')]]
     });
 
     this.registerForm.controls.password.valueChanges.subscribe(()=>{
