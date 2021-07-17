@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using API.Data.IRepositories;
 using API.DTOs;
 using API.Entities;
+using API.Helpers;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
@@ -21,14 +22,15 @@ namespace API.Data.Repositories
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<MemberDto>> GetMembersAsync()
+        public async Task<PagedList<MemberDto>> GetMembersAsync(PaginationParams paginationParams)
         {
-            return await _context.Users
+            var query = _context.Users
             .ProjectTo<MemberDto>(_mapper.ConfigurationProvider)
-            .ToListAsync();
+            .AsNoTracking();
+            return await PagedList<MemberDto>.CreateAsync(query,paginationParams.PageNumber,paginationParams.ItemsPerPage);
         }
 
-        public async Task<MemberDto> GetMembersByNameAsync(string name)
+        public async Task<MemberDto> GetMemberByNameAsync(string name)
         {
             return await _context.Users.Where(user =>user.UserName == name)
             .ProjectTo<MemberDto>(_mapper.ConfigurationProvider)

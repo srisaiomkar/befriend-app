@@ -4,7 +4,7 @@
             <img class="card-img-top img-thumbnail" src="{{member.mainPhotoUrl || './assets/noimage.png'}}" alt="{{member.nickName}}">
             <div class="card-body">
                 <h4 class="text-center">
-                    {{member.nickName}}
+                    {{member.nickName | titlecase}}
                 </h4>
                 <div *ngIf="member.city && member.country" >
                     <strong>Location: </strong>
@@ -46,7 +46,7 @@
     </div>
     <div class="col-8">
         <tabset>
-            <tab heading="About {{member.nickName}}" id="tab1">
+            <tab heading="About {{member.nickName | titlecase}}" id="tab1">
                 <div class="section" *ngIf ="member.bio">
                     <strong>Bio:</strong>
                     <div>{{member.bio}}</div>

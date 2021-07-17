@@ -6,6 +6,7 @@ using API.Data;
 using API.Data.IRepositories;
 using API.DTOs;
 using API.Entities;
+using API.Extensions;
 using API.Interfaces;
 using AutoMapper;
 using CloudinaryDotNet.Actions;
@@ -32,17 +33,19 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<MemberDto>>> GetUsers()
+        public async Task<ActionResult<IEnumerable<MemberDto>>> GetUsers([FromQuery]PaginationParams paginationParams)
         {
-            var usersToReturn = await _userRepository.GetMembersAsync();
-            return Ok(usersToReturn);
+            var users = await _userRepository.GetMembersAsync(paginationParams);
+            Response.AddPaginationHeader(users.PageNumber,users.ItemsPerPage,
+                users.TotalPages,users.TotalItems);
+            return Ok(users);
         }
 
         [HttpGet]
         [Route("{username}",Name = "GetUser")]
         public async Task<ActionResult<MemberDto>> GetUser(string username)
         {
-            return await _userRepository.GetMembersByNameAsync(username);
+            return await _userRepository.GetMemberByNameAsync(username);
         }
 
         [HttpPut]
