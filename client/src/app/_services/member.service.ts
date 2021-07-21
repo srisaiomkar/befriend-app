@@ -1,9 +1,10 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { of } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Member } from '../_models/member';
+import { PaginatedResult } from '../_models/pagination';
 
 
 @Injectable({
@@ -11,16 +12,28 @@ import { Member } from '../_models/member';
 })
 export class MemberService {
   members: Member[] = [];
+  paginationResult : PaginatedResult<Member[]> = new PaginatedResult<Member[]>();
 
   baseUrl : string = environment.apiUrl;
   constructor(private http : HttpClient) { }
 
-  getMembers(){
-    if(this.members.length > 0) return of(this.members);
-    return this.http.get<Member[]>(this.baseUrl + 'users').pipe(
-      map(members => {
-        this.members = members;
-        return members;
+  getMembers(pageNumber?: number, itemsPerPage?: number){
+    console.log(pageNumber);
+    console.log(itemsPerPage);
+    let params = new HttpParams();
+
+    // we need to convert params to string because query string is a string
+    params = params.append('pageNumber',pageNumber.toString());
+    params = params.append('itemsPerPage',itemsPerPage.toString());
+    console.log(params);
+    // observe response returns the entire http response(http headers and body)
+    return this.http.get<Member[]>(this.baseUrl + 'users',{observe:'response',params}).pipe(
+      map(response =>{
+        this.paginationResult.result = response.body;
+        if(response.headers.get('Pagination') !== null){
+          this.paginationResult.pagination = JSON.parse(response.headers.get('Pagination'));
+        }
+        return this.paginationResult;
       })
     );
   }
