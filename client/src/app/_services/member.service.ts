@@ -18,14 +18,11 @@ export class MemberService {
   constructor(private http : HttpClient) { }
 
   getMembers(pageNumber?: number, itemsPerPage?: number){
-    console.log(pageNumber);
-    console.log(itemsPerPage);
     let params = new HttpParams();
 
     // we need to convert params to string because query string is a string
     params = params.append('pageNumber',pageNumber.toString());
     params = params.append('itemsPerPage',itemsPerPage.toString());
-    console.log(params);
     // observe response returns the entire http response(http headers and body)
     return this.http.get<Member[]>(this.baseUrl + 'users',{observe:'response',params}).pipe(
       map(response =>{
