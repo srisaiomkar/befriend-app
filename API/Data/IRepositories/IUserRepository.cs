@@ -12,7 +12,7 @@ namespace API.Data.IRepositories
         Task<IEnumerable<AppUser>> GetUsersAsync();
         Task<AppUser> GetUserByIdAsync(int id);
         Task<AppUser> GetUserByNameAsync(string name);
-        Task<PagedList<MemberDto>> GetMembersAsync(PaginationParams paginationParams);
+        Task<PagedList<MemberDto>> GetMembersAsync(UserParams userParams);
         Task<MemberDto> GetMemberByNameAsync(string name);
         Task<bool> SaveAllChangesAsync();
 

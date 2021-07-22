@@ -22,12 +22,14 @@ namespace API.Data.Repositories
             _mapper = mapper;
         }
 
-        public async Task<PagedList<MemberDto>> GetMembersAsync(PaginationParams paginationParams)
+        public async Task<PagedList<MemberDto>> GetMembersAsync(UserParams userParams)
         {
-            var query = _context.Users
-            .ProjectTo<MemberDto>(_mapper.ConfigurationProvider)
-            .AsNoTracking();
-            return await PagedList<MemberDto>.CreateAsync(query,paginationParams.PageNumber,paginationParams.ItemsPerPage);
+            var query = _context.Users.AsQueryable();
+            query = query.Where(user => user.Gender == userParams.Gender);
+            query = query.Where(user => user.UserName != userParams.currentUserName);
+
+            return await PagedList<MemberDto>.CreateAsync(query.ProjectTo<MemberDto>(_mapper.ConfigurationProvider)
+            .AsNoTracking(),userParams.PageNumber,userParams.ItemsPerPage);
         }
 
         public async Task<MemberDto> GetMemberByNameAsync(string name)
