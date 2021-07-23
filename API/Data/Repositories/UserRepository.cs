@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -27,6 +28,19 @@ namespace API.Data.Repositories
             var query = _context.Users.AsQueryable();
             query = query.Where(user => user.Gender == userParams.Gender);
             query = query.Where(user => user.UserName != userParams.currentUserName);
+
+            //-1 year because say if maxAge is 30 if a person born on feb and current month is march the person would still be "30 running"
+            // Added 1 day because
+            /*
+                if max age is 30
+                and a person born on mar 1 2001 and today is mar 1 2032
+                AddYears(-userParams.maxAge -1) will make it mar 1 2001
+                the person's age would be 31 but max age is 30  
+
+            */
+            var minDob = DateTime.Today.AddYears(-userParams.maxAge -1).AddDays(1);
+            var maxDob = DateTime.Today.AddYears(-userParams.minAge);
+            query = query.Where(user => user.DateOfBirth >=minDob && user.DateOfBirth <= maxDob);
 
             return await PagedList<MemberDto>.CreateAsync(query.ProjectTo<MemberDto>(_mapper.ConfigurationProvider)
             .AsNoTracking(),userParams.PageNumber,userParams.ItemsPerPage);
