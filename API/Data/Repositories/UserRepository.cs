@@ -27,7 +27,7 @@ namespace API.Data.Repositories
         {
             var query = _context.Users.AsQueryable();
             query = query.Where(user => user.Gender == userParams.Gender);
-            query = query.Where(user => user.UserName != userParams.currentUserName);
+            query = query.Where(user => user.UserName != userParams.CurrentUserName);
 
             //-1 year because say if maxAge is 30 if a person born on feb and current month is march the person would still be "30 running"
             // Added 1 day because

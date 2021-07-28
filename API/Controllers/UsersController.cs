@@ -37,7 +37,7 @@ namespace API.Controllers
         {
             var username = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             var user = await _userRepository.GetUserByNameAsync(username);
-            userParams.currentUserName = username;
+            userParams.CurrentUserName = username;
             if(string.IsNullOrEmpty(userParams.Gender))
                 userParams.Gender = user.Gender == "male"? "female" : "male";
 
