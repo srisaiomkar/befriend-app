@@ -2,6 +2,7 @@ using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using API.Data.IRepositories;
+using API.Extensions;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -22,9 +23,9 @@ namespace API.Helpers
             */
             if(!resultContext.HttpContext.User.Identity.IsAuthenticated) return;
 
-            var username = resultContext.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var userId = resultContext.HttpContext.User.GetUserId();
             var repo = resultContext.HttpContext.RequestServices.GetService<IUserRepository>();
-            var user = await repo.GetUserByNameAsync(username);
+            var user = await repo.GetUserByIdAsync(userId);
             user.LastActive = DateTime.Now;
             await repo.SaveAllChangesAsync();
 
