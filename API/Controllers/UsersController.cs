@@ -64,7 +64,7 @@ namespace API.Controllers
 
         [HttpPost("photo")]
         public async Task<ActionResult<PhotoDto>> UploadPhoto(IFormFile file){
-            var user = await _userRepository.GetUserByIdAsync(User.GetUserId());
+            var user = await _userRepository.GetUserByNameAsync(User.GetUsername());
             ImageUploadResult uploadResult = await _photoService.UploadPhotoAsync(file);
 
             if(uploadResult.Error != null)
