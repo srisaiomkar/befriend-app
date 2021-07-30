@@ -3,7 +3,7 @@
 ## A Dating Application
 
 ### Features: 
-Authentication and Authorization, View Users, Pagination, Filtering, Sorting
+Authentication and Authorization, Edit Profile, Upload Photos, View Users, Pagination, Filtering, Sorting
 
 
 
