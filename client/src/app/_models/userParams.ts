@@ -6,7 +6,7 @@ export class UserParams{
     maxAge: number = 99;
     pageNumber: number = 1;
     itemsPerPage: number = 12;
-
+    orderBy: string = 'lastActive';
     constructor(user :User){
         this.gender = user.gender === "male"? "female":"male";
     }

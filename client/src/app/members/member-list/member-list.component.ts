@@ -19,7 +19,9 @@ export class MemberListComponent implements OnInit {
   members : Member[];
   pagination : Pagination;
   user : User;
-  genderList = [{value:'male',display:'Men'},{value:'female',display:'Women'}]
+  genderList = [{value:'male',display:'Men'},{value:'female',display:'Women'}];
+  sortTypes =[{value:'lastActive', display :'Last Active Members'},
+              {value:'accountCreated', display :'Newest Members'}];
 
   constructor(private memberService : MemberService,private accountService : AccountService) {
     this.accountService.currentUser$.pipe(take(1)).subscribe(user => this.user = user) 

@@ -18,6 +18,15 @@
         </div>
         <button class="btn btn-success ml-2" type="submit">Apply Filters</button>
         <button class="btn btn-info ml-2" type="button" (click)="resetFilter()">Reset Filters</button>
+        <div class="form-group ml-auto">
+                <label>First See: </label>
+                <select class="form-select ml-1" name="orderBy" style="width: 200px;" 
+                [(ngModel)]="userParams.orderBy" (ngModelChange)="loadMembers()">
+                    <option *ngFor="let sortType of sortTypes" [value]='sortType.value'>
+                        {{sortType.display}}
+                    </option>  
+                </select>
+            </div>
     </form>
 </div>
 <div class="mt-3">

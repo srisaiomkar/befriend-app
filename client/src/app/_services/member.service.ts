@@ -27,6 +27,7 @@ export class MemberService {
     params = params.append('gender',userParams.gender);
     params = params.append('minAge',userParams.minAge.toString());
     params = params.append('maxAge',userParams.maxAge.toString());
+    params = params.append('orderBy',userParams.orderBy);
     // observe response returns the entire http response(http headers and body)
     return this.http.get<Member[]>(this.baseUrl + 'users',{observe:'response',params}).pipe(
       map(response =>{
