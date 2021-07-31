@@ -14,7 +14,6 @@ import { getPaginatedResult } from './paginationHelper';
 })
 export class MemberService {
   members: Member[] = [];
-  paginationResult : PaginatedResult<Member[]> = new PaginatedResult<Member[]>();
   memberCache = new Map();
 
   baseUrl : string = environment.apiUrl;
