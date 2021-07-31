@@ -1,11 +1,13 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { of } from 'rxjs';
-import { map, shareReplay } from 'rxjs/operators';
+import { map, shareReplay, take } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Member } from '../_models/member';
 import { PaginatedResult } from '../_models/pagination';
+import { User } from '../_models/user';
 import { UserParams } from '../_models/userParams';
+import { AccountService } from './account.service';
 import { getPaginatedResult } from './paginationHelper';
 
 
@@ -15,9 +17,27 @@ import { getPaginatedResult } from './paginationHelper';
 export class MemberService {
   members: Member[] = [];
   memberCache = new Map();
+  user : User;
+  userParams : UserParams;
 
   baseUrl : string = environment.apiUrl;
-  constructor(private http : HttpClient) { }
+  constructor(private http : HttpClient, private accountService : AccountService) { 
+    this.accountService.currentUser$.pipe(take(1)).subscribe(user => this.user = user);
+    this.userParams = new UserParams(this.user);
+  }
+
+  getUserParams(){
+    return this.userParams;
+  }
+
+  setUserParams(params : UserParams){
+    this.userParams = params;
+  }
+
+  resetUserParams(){
+    this.userParams = new UserParams(this.user);
+    return this.userParams;
+  }
 
   getMembers(userParams : UserParams){
     let params = new HttpParams();
