@@ -20,11 +20,11 @@
                 </div>
                 <div *ngIf ="member.accountCreated">
                     <strong>Member since: </strong>
-                    {{member.accountCreated}}
+                    {{member.accountCreated | date}}
                 </div>
                 <div *ngIf ="member.lastActive">
                     <strong>Last Active: </strong>
-                    {{member.lastActive}}
+                    {{member.lastActive | timeago}}
                 </div>
                 <div class="text-center mt-3" >
                     <button form="editForm" type="submit" class="btn btn-success mr-2" [disabled]='!editForm.dirty'>
