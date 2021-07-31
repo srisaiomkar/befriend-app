@@ -8,7 +8,7 @@ Authentication and Authorization, Edit Profile, Upload Photos, View Users, Pagin
 
 
 
-### Technologies: 
+### Tools and Technologies: 
 
 #### Back End :
 .Net 5, C#, Entity Framework Core
