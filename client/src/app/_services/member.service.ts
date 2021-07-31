@@ -6,6 +6,7 @@ import { environment } from 'src/environments/environment';
 import { Member } from '../_models/member';
 import { PaginatedResult } from '../_models/pagination';
 import { UserParams } from '../_models/userParams';
+import { getPaginatedResult } from './paginationHelper';
 
 
 @Injectable({
@@ -14,13 +15,18 @@ import { UserParams } from '../_models/userParams';
 export class MemberService {
   members: Member[] = [];
   paginationResult : PaginatedResult<Member[]> = new PaginatedResult<Member[]>();
+  memberCache = new Map();
 
   baseUrl : string = environment.apiUrl;
   constructor(private http : HttpClient) { }
 
   getMembers(userParams : UserParams){
     let params = new HttpParams();
-
+    var response = this.memberCache.get(Object.values(userParams).join('-'));
+    console.log(this.memberCache);
+    if(response){
+      return of(response);
+    }
     // we need to convert params to string because query string is a string
     params = params.append('pageNumber',userParams.pageNumber.toString());
     params = params.append('itemsPerPage',userParams.itemsPerPage.toString());
@@ -28,14 +34,10 @@ export class MemberService {
     params = params.append('minAge',userParams.minAge.toString());
     params = params.append('maxAge',userParams.maxAge.toString());
     params = params.append('orderBy',userParams.orderBy);
-    // observe response returns the entire http response(http headers and body)
-    return this.http.get<Member[]>(this.baseUrl + 'users',{observe:'response',params}).pipe(
+    return getPaginatedResult<Member[]>(this.baseUrl + 'users',params,this.http).pipe(
       map(response =>{
-        this.paginationResult.result = response.body;
-        if(response.headers.get('Pagination') !== null){
-          this.paginationResult.pagination = JSON.parse(response.headers.get('Pagination'));
-        }
-        return this.paginationResult;
+        this.memberCache.set(Object.values(userParams).join('-'),response);
+        return response;
       })
     );
   }
