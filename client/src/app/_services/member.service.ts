@@ -22,7 +22,6 @@ export class MemberService {
   getMembers(userParams : UserParams){
     let params = new HttpParams();
     var response = this.memberCache.get(Object.values(userParams).join('-'));
-    console.log(this.memberCache);
     if(response){
       return of(response);
     }
@@ -42,8 +41,14 @@ export class MemberService {
   }
 
   getMember(username: string){
-    const member = this.members.find((member) => member.userName === username);
-    if(member !== undefined) return of(member);
+    console.log([...this.memberCache.values()]
+    .reduce((arr, elem) => arr.concat(elem.result),[]));
+    const member = [...this.memberCache.values()]
+    .reduce((arr, paginatedResult: PaginatedResult<Member[]>) => arr.concat(paginatedResult.result),[])
+    .find((member: Member) => member.userName === username);
+    if(member){
+      return of(member);
+    }
     return this.http.get<Member>(this.baseUrl + 'users/' + username);
   }
 
