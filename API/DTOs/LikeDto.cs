@@ -10,7 +10,7 @@ namespace API.DTOs
         public string City { get; set; }
         public string Country { get; set; }
         public DateTime DateOfBirth { get; set; }
-        public string Nickname { get; set; }
+        public string NickName { get; set; }
         public string MainPhotoUrl { get; set; }
 
     }

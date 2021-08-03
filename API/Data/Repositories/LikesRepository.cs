@@ -44,7 +44,7 @@ namespace API.Data.Repositories
                 City = user.City,
                 Country = user.Country,
                 DateOfBirth = user.DateOfBirth,
-                Nickname = user.NickName,
+                NickName = user.NickName,
                 MainPhotoUrl = user.Photos.FirstOrDefault(photo => photo.IsMain).Url
             }).ToListAsync();
         }
