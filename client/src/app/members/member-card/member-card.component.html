@@ -1,6 +1,7 @@
 <div class="card mb-4" >
-    <div class="card-img-wrapper" routerLink="/members/{{member.userName}}">
-        <img class="card-img-top" src="{{member.mainPhotoUrl || './assets/noimage.png'}}" alt="{{member.nickName}}">
+    <div class="card-img-wrapper">
+        <img class="card-img-top" src="{{member.mainPhotoUrl || './assets/noimage.png'}}" 
+        alt="{{member.nickName}}" routerLink="/members/{{member.userName}}">
         <ul class="list-inline text-center member-icons">
           <li class="list-inline-item">
             <button class="btn btn-primary" routerLink='/members/{{member.userName}}'>
@@ -8,7 +9,7 @@
             </button>
           </li>
           <li class="list-inline-item">
-            <button class="btn btn-danger">
+            <button class="btn btn-danger" (click)="likeUser(member.userName)">
               <i class="fa fa-heart" aria-hidden="true"></i>
             </button>
           </li>
