@@ -21,9 +21,7 @@ namespace API.Entities
         public string Interests { get; set; }
         public string LookingFor { get; set; }
         public ICollection<Photo> Photos { get; set; }
-        
-        // public int GetAge(){
-        //     return DateOfBirth.CalculateAge();
-        // }
+        public ICollection<Like> LikedByUsers { get; set; }
+        public ICollection<Like> LikedUsers { get; set; }
     }
 }
