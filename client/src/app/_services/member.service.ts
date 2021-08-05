@@ -8,7 +8,7 @@ import { PaginatedResult } from '../_models/pagination';
 import { User } from '../_models/user';
 import { UserParams } from '../_models/userParams';
 import { AccountService } from './account.service';
-import { getPaginatedResult } from './paginationHelper';
+import { getPaginatedResult, getPaginationHeaders } from './paginationHelper';
 
 
 @Injectable({
@@ -40,14 +40,13 @@ export class MemberService {
   }
 
   getMembers(userParams : UserParams){
-    let params = new HttpParams();
+    let params = getPaginationHeaders(userParams.pageNumber,userParams.itemsPerPage);
     var response = this.memberCache.get(Object.values(userParams).join('-'));
     if(response){
       return of(response);
     }
     // we need to convert params to string because query string is a string
-    params = params.append('pageNumber',userParams.pageNumber.toString());
-    params = params.append('itemsPerPage',userParams.itemsPerPage.toString());
+  
     params = params.append('gender',userParams.gender);
     params = params.append('minAge',userParams.minAge.toString());
     params = params.append('maxAge',userParams.maxAge.toString());

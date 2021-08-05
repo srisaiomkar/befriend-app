@@ -1,4 +1,4 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpParams } from "@angular/common/http";
 import { map } from "rxjs/operators";
 import { PaginatedResult } from "../_models/pagination";
 
@@ -19,4 +19,14 @@ export function getPaginatedResult<T>(url,params,http : HttpClient){
             return paginatedResult;
         })
     );
+}
+
+export function getPaginationHeaders(pageNumber : number,itemsPerPage : number){
+    let params = new HttpParams();
+
+    params = params.append('pageNumber',pageNumber.toString());
+    params = params.append('itemsPerPage',itemsPerPage.toString());
+
+    return params;
+
 }
