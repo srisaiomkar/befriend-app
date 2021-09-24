@@ -10,18 +10,18 @@
     <ul  class="navbar-nav mr-auto mt-2 mt-lg-0">
       <ng-container *ngIf="accountService.currentUser$ | async">
         <li class="nav-item">
-          <a class="nav-link" routerLink='/members' routerLinkActive='active'>Matches</a>
+          <a class="nav-link" routerLink='/members' routerLinkActive='active'>Find Matches</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink='/lists' routerLinkActive='active'>Lists</a>
+          <a class="nav-link" routerLink='/lists' routerLinkActive='active'>Likes</a>
         </li>
-        <li class="nav-item">
+        <!-- <li class="nav-item">
           <a class="nav-link" routerLink='/messages' routerLinkActive='active'>Messages</a>
-        </li>
+        </li> -->
       </ng-container>
-      <li class="nav-item">
+      <!-- <li class="nav-item">
         <a class="nav-link" routerLink='/errors' routerLinkActive='active'>Error test</a>
-      </li>
+      </li> -->
     </ul>
     <div dropdown class="dropdown" *ngIf="(accountService.currentUser$ | async) as user">
       <a dropdownToggle class="dropdown-toggle text-light ml-2">
