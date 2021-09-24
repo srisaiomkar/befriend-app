@@ -13,7 +13,6 @@ export class ListsComponent implements OnInit {
   members : Partial<Member[]>;
   likesParams = new LikesParams('liked');
   pagination : Pagination;
-  predicate = 'liked';
 
   constructor(private likesService : LikesService) { }
 
