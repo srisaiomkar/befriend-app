@@ -51,6 +51,7 @@ namespace API.Data.Repositories
                     break;
             }
 
+            // With AsNoTracking, Entity Framework performs no additional processing or storage of the entities which are returned by the query
             return await PagedList<MemberDto>.CreateAsync(query.ProjectTo<MemberDto>(_mapper.ConfigurationProvider)
             .AsNoTracking(),userParams.PageNumber,userParams.ItemsPerPage);
         }
